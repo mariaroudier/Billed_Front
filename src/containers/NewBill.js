@@ -18,12 +18,20 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    console.log(file)
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
+    
+    console.log(formData)
+    const extension = file.name.split('.').pop()
+    
+    if(!(extension == 'png' || extension == 'jpeg' || extension == 'jpg')) {
+      return 
+    }
 
     this.store
       .bills()
@@ -33,12 +41,15 @@ export default class NewBill {
           noContentType: true
         }
       })
+      
       .then(({fileUrl, key}) => {
         console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
+    
+      console.log(this.fileUrl)
   }
   handleSubmit = e => {
     e.preventDefault()
