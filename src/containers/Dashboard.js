@@ -80,7 +80,6 @@ export default class {
 
   handleClickIconEye = () => {
     const billUrl = $('#icon-eye-d').attr("data-bill-url")
-    console.log(billUrl)
     const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
     $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
     if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
@@ -131,6 +130,7 @@ export default class {
     this.onNavigate(ROUTES_PATH['Dashboard'])
   }
 
+  // BUG TO SELECT TWO TICKETS
   handleShowTickets(e, bills, index) {
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
@@ -145,15 +145,13 @@ export default class {
         .html("")
       this.counter ++
     }
-    console.log(bills)
-    // changed 
+   
     bills.forEach(bill => {
-    // $(`#open-bill${bill.id}`).click((e)
+    // $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+
       $(`#status-bills-container${this.index} #open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
-    
     return bills
-
   }
 
   getBillsAllUsers = () => {

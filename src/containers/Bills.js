@@ -26,14 +26,35 @@ export default class {
     $('#modaleFile').modal("show")
   }
 
+  // BUG OF SORTING
   getBills = () => {
     if (this.store) {
       return this.store
       .bills()
       .list()
       .then(snapshot => {
-        const bills = snapshot.sort((a, b) => ((a.date < b.date) ? 1 : -1))
-        return bills
+        // .map(doc => {
+        //   try {
+        //     return {
+        //       ...doc,
+        //       date: formatDate(doc.date),
+        //       status: formatStatus(doc.status)
+        //     }
+        //   } catch(e) {
+        //     // if for some reason, corrupted data was introduced, we manage here failing formatDate function
+        //     // log the error and return unformatted date in that case
+        //     console.log(e,'for',doc)
+        //     return {
+        //       ...doc,
+        //       date: doc.date,
+        //       status: formatStatus(doc.status)
+        //     }
+        //   }
+        // })
+        // console.log('length', bills.length)
+          
+          const bills = snapshot.sort((a, b) => (((a.date < b.date)|| !a.date) ? 1 : -1))
+          return bills
       })
     }
   }

@@ -15,6 +15,8 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
+
+  // BUG EXTENSION
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
@@ -25,10 +27,8 @@ export default class NewBill {
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-    
-    console.log(formData)
+    // I ADD THIS
     const extension = file.name.split('.').pop()
-    
     if(!(extension == 'png' || extension == 'jpeg' || extension == 'jpg')) {
       return 
     }
@@ -48,9 +48,8 @@ export default class NewBill {
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
-    
-      console.log(this.fileUrl)
   }
+  
   handleSubmit = e => {
     e.preventDefault()
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
